@@ -15,5 +15,8 @@ Get list of proxies and test it. For example:
 ```go
 proxies := hideMyAssParsing.GetProxies()
 
-proxies = hideMyAssParsing.TestProxies(proxies)
+successCallback := func(proxy Proxy) { activateProxy(proxy) }
+errorCallback := func(proxy Proxy) { deactivateProxy(proxy) }
+
+hideMyAssParsing.TestProxies(proxies, successCallback, errorCallback)
 ```

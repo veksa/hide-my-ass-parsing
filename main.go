@@ -18,13 +18,16 @@ func GetProxies() []Proxy {
     return cleanedProxies
 }
 
-func TestProxies(proxies []Proxy) []Proxy {
-    for i, proxy := range proxies {
+type successCallback func(Proxy)
+type errorCallback func(Proxy)
+
+func TestProxies(proxies []Proxy, successFn successCallback, errorFn errorCallback) {
+    for _, proxy := range proxies {
         check, _ := testPage("http://google.ru", proxy, "<title>Google</title>")
         if !check {
-            proxies = append(proxies[:i], proxies[i+1:]...)
+            successFn(proxy)
+        } else {
+            errorFn(proxy)
         }
     }
-
-    return proxies
 }
