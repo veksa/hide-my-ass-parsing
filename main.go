@@ -24,7 +24,7 @@ type errorCallback func(Proxy)
 func TestProxies(proxies []Proxy, successFn successCallback, errorFn errorCallback) {
     for _, proxy := range proxies {
         check, _ := testPage("http://google.ru", proxy, "<title>Google</title>")
-        if !check {
+        if check {
             successFn(proxy)
         } else {
             errorFn(proxy)
